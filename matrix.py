@@ -5,7 +5,7 @@ import random
 vec2 = pg.math.Vector2
 
 RES = WIDTH, HEIGHT = 1600, 900
-NUM_STARS = 200
+NUM_STARS = 120
 
 COLORS = [(0, 255, 0), (0, 80, 0)]
 
@@ -15,20 +15,21 @@ ALPHA = 35
 class Block:
     def __init__(self, app):
         self.screen = app.screen
-        self.pos2d = self.get_pos2d()
+
         self.vel = random.uniform(0.05, 0.25)
         self.color = random.choice(COLORS)
         self.screen_pos = vec2(0, 0)
-        self.size = 20
+        self.size = 15
+        self.pos2d = self.get_pos2d(self.size)
 
         self.speed = random.randrange(7, 10)
 
 
-    def get_pos2d(self):
+    def get_pos2d(self, size):
 
-        count_col = int(WIDTH / 20)
+        count_col = int(WIDTH / size)
         col = [i for i in range(count_col)]
-        x = col[random.randrange(len(col))] * 20
+        x = col[random.randrange(len(col))] * size
         y = random.randrange(0, 700)
         return vec2(x, y)
 
@@ -36,7 +37,7 @@ class Block:
         mouse_pos = pg.mouse.get_pos()
 
 
-        self.pos2d = self.get_pos2d() if self.pos2d.y > HEIGHT else self.pos2d
+        self.pos2d = self.get_pos2d(self.size) if self.pos2d.y > HEIGHT else self.pos2d
 
 
 
